@@ -33,7 +33,7 @@ You will most likely not need to add any k8s-specific settings to your pipeline 
 
 ### Accessing your PVC
 
-Nextflow and all of its tasks store everything on your PVC. You can use “nextflow kuberun login -v <pvc>” to browse your PVC for debugging purposes. This command is simply a shortcut for creating a pod with the PVC attached. Alternatively, you can just exec into any running workflow pod, for example “kubectl exec -it <run-name> – bash”.
+Nextflow and all of its tasks store everything on your PVC. You can use `nextflow kuberun login -v <pvc>` to browse your PVC for debugging purposes. This command is simply a shortcut for creating a pod with the PVC attached. Alternatively, you can just exec into any running workflow pod, for example `kubectl exec -it <run-name> – bash`.
 
 ### Using kuberun
 
@@ -43,7 +43,7 @@ In cases where kuberun doesn’t work for you, you can always get around it by e
 
 ### Scheduler warnings
 
-The k8s executor works like other grid executors – you can queue up as many tasks as you want, and Kubernetes will try to map each task to a node. Unlike other executors, Kubernetes will continuously log warning messages as long as there are un-scheduled pods. Don’t be alarmed by the slurry of warnings, as it is normal. In fact, Kubernetes will even give you a reason for why each node is unavailable, so use that to your advantage where appropriate.
+The k8s executor works like other grid executors -- you can queue up as many tasks as you want, and Kubernetes will try to map each task to a node. Unlike other executors, Kubernetes will continuously log warning messages as long as there are un-scheduled pods. Don’t be alarmed by the slurry of warnings, as it is normal. In fact, Kubernetes will even give you a reason for why each node is unavailable, so use that to your advantage where appropriate.
 
 ### Diagnosing errors
 
@@ -60,7 +60,7 @@ Unfortunately, Nextflow’s error handling mechanisms for Kubernetes are not foo
 
 ### Diagnosing pod failures
 
-When a pod fails, it is usually a result of either (1) an error in the task script, (2) network and/or latency between the workflow pod, task pod, and storage, or (3) some incompatibility between the pod and the underlying hardware (very rare). Aside from the standard procedure of checking the nextflow log and the task directories, you can check the pod metadata by running “kubectl describe <task-pod>”. This metadata will usually have a more detailed description of the error. If a pod fails due to a faulty or incompatible node, you can either (1) use a dynamic retry with backoff and see if the pod lands on a different node or (2) use a node selector or affinity to avoid the node altogether.
+When a pod fails, it is usually a result of either (1) an error in the task script, (2) network and/or latency between the workflow pod, task pod, and storage, or (3) some incompatibility between the pod and the underlying hardware (very rare). Aside from the standard procedure of checking the nextflow log and the task directories, you can check the pod metadata by running `kubectl describe <task-pod>`. This metadata will usually have a more detailed description of the error. If a pod fails due to a faulty or incompatible node, you can either (1) use a dynamic retry with backoff and see if the pod lands on a different node or (2) use a node selector or affinity to avoid the node altogether.
 
 Furthermore, some pod failures cause the entire workflow to fail, even when using a retry error strategy. This is because some k8s-related errors are not “wired” into the standard retry logic, and just default to workflow termination. If you encounter such an error, feel free to submit a GitHub issue so that we can evaluate it and hopefully correct it.
 
@@ -81,7 +81,7 @@ A node selector allows you to select certain nodes that a pod can use, based on 
 
 ### Requesting new features
 
-Support for k8s features is added on an as-needed basis, so if you need a specific feature, feel free to submit a Feature Request issue and present your use case.
+Support for k8s features is added on an as-needed basis, so if you need a specific feature, feel free to submit a Feature Request issue and present your use case. Refer to [this document](feature-evaluation.md) to see our own evaluation of which Kubernetes features might be supported in the future.
 
 ## Additional Resources
 
