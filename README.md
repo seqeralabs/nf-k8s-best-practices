@@ -83,14 +83,6 @@ A node selector allows you to select certain nodes that a pod can use, based on 
 
 Support for k8s features is added on an as-needed basis, so if you need a specific feature, feel free to submit a Feature Request issue and present your use case. Refer to [this document](feature-evaluation.md) to see our own evaluation of which Kubernetes features might be supported in the future.
 
-## Additional Resources
-
-Nextflow/k8s development:
+To see the latest developments with Nextflow / Kubernetes, visit the Nextflow respository:
 - [Open PRs](https://github.com/nextflow-io/nextflow/pulls?q=is%3Aopen+is%3Apr+label%3Aplatform%2Fk8s)
 - [Open Issues](https://github.com/nextflow-io/nextflow/issues?q=is%3Aopen+is%3Aissue+label%3Aplatform%2Fk8s)
-
-Related Nextflow/k8s projects (by @bentsherman and colleagues)
-- https://github.com/SystemsGenetics/kube-runner
-- https://github.com/SciDAS/nextflow-api
-- https://github.com/cbmckni/kinc-k8s-demo
-- https://github.com/cbmckni/gpn-workshop
