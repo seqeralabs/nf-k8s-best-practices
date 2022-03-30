@@ -42,7 +42,7 @@ The following section shows the state of Nextflow support for each PodSpec field
 | `nodeSelector`                  | already supported (original object syntax and custom string syntax)              |
 | `overhead`                      | not supported                                                                    |
 | `preemptionPolicy`              | not supported; might be useful; easy to implement                                |
-| `priority`                      | not supported; probably should be supported alongside `priorityClassName`        |
+| `priority`                      | not supported; use `priorityClassName` instead                                   |
 | `priorityClassName`             | already supported                                                                |
 | `readinessGates`                | not supported; might be useful; easy to implement                                |
 | `restartPolicy`                 | not supported; user should use `errorStrategy` directive instead                 |
@@ -123,5 +123,5 @@ Based on the above evaluation, I recommend the following changes:
 
 - Rename `pod` directive to `podOptions` to emphasize the analogy to `clusterOptions`
 - Use `activeDeadlineSeconds` to facilitate walltime limits for k8s tasks via `time` directive
-- Add support for the following pod options: `priority`, `tolerations`, `downwardAPI`, `emptyDir`
+- Add support for the following pod options: `tolerations`, `downwardAPI`, `emptyDir`
 - Deprecate `runAsUser` pod option in favor of `securityContext`
