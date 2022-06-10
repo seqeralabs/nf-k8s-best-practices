@@ -92,8 +92,11 @@ Furthermore, some pod failures cause the entire workflow to fail, even when usin
 
 In my experience, Nextflow sometimes has issues launching and managing many tasks via k8s. Nextflow will sometimes lose track of a task even though it may have run successfully. Determining the root cause is difficult, as there are a few different errors that can occur. Here are some potential remedies:
 
+- Set the `k8s.computeResourceType` config option to `'Job'`
 - Set the `automountServiceAccountToken` pod option to `false`
 - Decrease the queue size
+
+The first option (using Jobs instead of Pods) has been particularly effective at increasing the stability of Nextflow / K8s pipelines at scale. For now it is an opt-in feature, but in the future it will likely become the default behavior.
 
 ### Requests and limits
 
