@@ -4,11 +4,11 @@ This section provides a high-level view of the space of Kubernetes features that
 
 ## JobSpec ([source](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.19/#jobspec-v1-batch))
 
-Since we are considering changing Nextflow to use Jobs instead of Pods to submit tasks, here we evaluate how each JobSpec field should be used by Nextflow if this change is made.
+In Nextflow v22.04 and later, the `k8s` executor can be configured to use Jobs instead of Pods directly.
 
 | Name                      | Notes                                                                                                   |
 | ------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `activeDeadlineSeconds`   | not supported; could be used to facilitate a walltime limit via `time` directive                        |
+| `activeDeadlineSeconds`   | already supported via `time` directive                                                                  |
 | `backoffLimit`            | not supported; could be used by `errorStrategy` directive but might be messy                            |
 | `completions`             | should always be 1 or nil                                                                               |
 | `manualSelector`          | not supported                                                                                           |
@@ -23,7 +23,7 @@ The following section shows the state of Nextflow support for each PodSpec field
 
 | Name                            | Notes                                                                            |
 | ------------------------------- | -------------------------------------------------------------------------------- |
-| `activeDeadlineSeconds`         | not supported; could be used to facilitate a walltime limit via `time` directive |
+| `activeDeadlineSeconds`         | already supported via `time` directive                                           |
 | `affinity`                      | already supported                                                                |
 | `automountServiceAccountToken`  | already supported                                                                |
 | `containers`                    | already supported via `container` directive                                      |
@@ -38,14 +38,14 @@ The following section shows the state of Nextflow support for each PodSpec field
 | `hostname`                      | not supported                                                                    |
 | `imagePullSecrets`              | already supported                                                                |
 | `initContainers`                | not supported                                                                    |
-| `nodeName`                      | not supported; user should use `nodeSelector` pod option instead                 |
+| `nodeName`                      | not supported; use `nodeSelector` pod option instead                             |
 | `nodeSelector`                  | already supported (original object syntax and custom string syntax)              |
 | `overhead`                      | not supported                                                                    |
 | `preemptionPolicy`              | not supported; might be useful; easy to implement                                |
 | `priority`                      | not supported; use `priorityClassName` instead                                   |
 | `priorityClassName`             | already supported                                                                |
 | `readinessGates`                | not supported; might be useful; easy to implement                                |
-| `restartPolicy`                 | not supported; user should use `errorStrategy` directive instead                 |
+| `restartPolicy`                 | not supported; use `errorStrategy` directive instead                             |
 | `runtimeClassName`              | not supported; might be useful; easy to implement                                |
 | `schedulerName`                 | not supported; might be useful; easy to implement                                |
 | `securityContext`               | already supported                                                                |
@@ -54,7 +54,7 @@ The following section shows the state of Nextflow support for each PodSpec field
 | `shareProcessNamespace`         | not supported                                                                    |
 | `subdomain`                     | not supported                                                                    |
 | `terminationGracePeriodSeconds` | not supported; might be useful; easy to implement                                |
-| `tolerations`                   | not supported; probably should be supported alongside `affinity`, `nodeSelector` |
+| `tolerations`                   | already supported                                                                |
 | `topologySpreadConstraints`     | not supported; might be useful; easy to implement                                |
 | `volumes`                       | already supported (see below)                                                    |
 
@@ -65,7 +65,7 @@ The following section shows the state of Nextflow support for each PodSpec field
 | `args`                     | already used by Nextflow                        |
 | `command`                  | already used by Nextflow                        |
 | `env`                      | already supported                               |
-| `envFrom`                  | not supported; user should use `env` pod option |
+| `envFrom`                  | not supported; use `env` pod option instead     |
 | `image`                    | already used by Nextflow                        |
 | `imagePullPolicy`          | already supported                               |
 | `lifecycle`                | not supported                                   |
@@ -87,7 +87,7 @@ The following section shows the state of Nextflow support for each PodSpec field
 
 ## Volume ([source](https://kubernetes.io/docs/concepts/storage/volumes/))
 
-In general, Nextflow does not support specific storage backends (see [nextflow-io/nextflow #998](https://github.com/nextflow-io/nextflow/issues/998)). It is recommended that you provision any storage through a PersistentVolumeClaim and use the `volumeClaim` pod option.
+In general, Nextflow does not support specific storage backends (see [nextflow-io/nextflow #998](https://github.com/nextflow-io/nextflow/issues/998)). It is recommended that you provision any storage through a PersistentVolumeClaim and use the `volumeClaim` pod option. However, Nextflow does allow you to explicitly configure certain ephemeral volume types, such as `configMap` and `secret`.
 
 | Name                    | Notes                                                                 |
 | ----------------------- | --------------------------------------------------------------------- |
@@ -116,12 +116,3 @@ In general, Nextflow does not support specific storage backends (see [nextflow-i
 | `rbd`                   | not supported                                                         |
 | `secret`                | already supported                                                     |
 | `vsphereVolume`         | not supported                                                         |
-
-## Recommendations
-
-Based on the above evaluation, I recommend the following changes:
-
-- Rename `pod` directive to `podOptions` to emphasize the analogy to `clusterOptions`
-- Use `activeDeadlineSeconds` to facilitate walltime limits for k8s tasks via `time` directive
-- Add support for the following pod options: `tolerations`, `downwardAPI`, `emptyDir`
-- Deprecate `runAsUser` pod option in favor of `securityContext`
