@@ -1,5 +1,9 @@
 # Nextflow on Kubernetes: Best Practices
 
+**ARCHIVED**: This guide is no longer maintained. Instead, refer to the [Nextflow documentation](https://nextflow.io/docs/latest/kubernetes.html) as well as our Kubernetes-related blog posts:
+- [The State of Kubernetes in Nextflow](https://nextflow.io/blog/2023/the-state-of-kubernetes-in-nextflow.html)
+- [Nextflow and K8s Rebooted: Running Nextflow on Amazon EKS](https://seqera.io/blog/deploying-nextflow-on-amazon-eks/)
+
 ## Introduction
 
 This document is a collaborative space for users and developers to contribute accumulated knowledge from running Nextflow on Kubernetes. Anyone is welcome to add content as they see fit and I (@bentsherman) will try to keep things organized as the project develops.
@@ -109,7 +113,3 @@ A __node selector__ allows you to select certain nodes that a pod can use, based
 ### Requesting new features
 
 Support for k8s features is added on an as-needed basis, so if you need a specific feature, feel free to submit a Feature Request issue and present your use case. Refer to [this document](feature-evaluation.md) to see our own evaluation of which Kubernetes features might be supported in the future.
-
-To see the latest developments with Nextflow / Kubernetes, visit the Nextflow respository:
-- [Open PRs](https://github.com/nextflow-io/nextflow/pulls?q=is%3Aopen+is%3Apr+label%3Aplatform%2Fk8s)
-- [Open Issues](https://github.com/nextflow-io/nextflow/issues?q=is%3Aopen+is%3Aissue+label%3Aplatform%2Fk8s)
